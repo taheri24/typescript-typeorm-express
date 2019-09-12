@@ -25,13 +25,20 @@
   ],
   "devDependencies": {
     "@types/body-parser": "^1.17.1",
+    "@types/cors": "^2.8.6",
     "@types/express": "^4.17.1",
     "@types/fs-extra": "^8.0.0",
+    "@types/lru-cache": "^5.1.0",
     "@types/node": "^12.7.4",
+    "@types/sha1": "^1.1.2",
     "awesome-typescript-loader": "^5.2.1",
+    "lru-cache": "^5.1.1",
+    "module-alias": "^2.2.1",
+    "nodemon": "^1.19.2",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.0.4",
     "ts-node": "^8.3.0",
+    "tsconfig-paths": "^3.8.0",
     "typescript": "^3.6.2",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8",
@@ -39,13 +46,21 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "captchapng": "0.0.1",
+    "cors": "^2.8.5",
+    "crc32": "^0.2.2",
+    "emitter": "0.0.5",
     "express": "^4.17.1",
     "fs-extra": "^8.1.0",
     "mysql": "^2.17.1",
+    "sha1": "^1.1.1",
     "typeorm": "^0.2.18"
   },
+  "_moduleAliases":{
+    "@lib":"src/lib/index"
+  },
   "scripts": {
-    "start": "tsc && node src/index.js",
+    "start": "nodemon --watch src/**/* -e js,ts,json --exec node --inspect -r module-alias/register -r ts-node/register/transpile-only src/index.ts    ",
     "build": "webpack --config webpack.config.js -p"
   }
 }

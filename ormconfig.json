@@ -1,12 +1,9 @@
 {
   "type": "mysql",
   "host": "localhost",
-  "port": 3306,
-  "username": "test",
-  "password": "test",
+  "port": 3307,
+  "username": "root",
+  "password": "mysql",
   "database": "test",
-  "synchronize": true,
-  "entities": [
-    "src/entity/*.js"
-  ]
+  "synchronize":false 
 }

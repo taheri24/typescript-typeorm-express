@@ -18,7 +18,7 @@ module.exports = {
         filename: 'server.bundle.js'
     },
     resolve: {
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts','.sql', '.js'],
         modules: [
              './node_modules'
         ]
