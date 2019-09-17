@@ -10,6 +10,8 @@
             ],
             "runtimeArgs": [
                 "-r",
+                "module-alias/register",
+                "-r",
                 "ts-node/register/transpile-only"
             ],
             "cwd": "${workspaceFolder}",

@@ -1,0 +1,1 @@
+export {default as postListQuery} from './post-list.sql'

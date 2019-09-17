@@ -1,13 +1,18 @@
 {
     "compilerOptions": {
-         
+          
+         "lib":[
+             "es2019"
+
+         ],
         "baseUrl": "./",
         "module": "commonjs",
         "moduleResolution": "node",
-        "paths": {
-             
-            "@lib/*":["src/lib/*"],
-            "@lib":["src/lib/index"]
+        "paths": {             
+            "@lib":["src/lib"],
+            "@queries":["src/queries"],
+            "@entities":["src/entities"],
+            "@app-gallery":["src/app-gallery"]
         },
         "target": "es2019",
         "emitDecoratorMetadata": true,
@@ -22,14 +27,5 @@
     },
     "exclude": [
         "node_modules"
-    ],
-     
-    "files": [
-        "./types/index.d.ts"
-         
-    ],
-    "includes": [
-        "./types/index.d.ts"
-         
     ]
 }

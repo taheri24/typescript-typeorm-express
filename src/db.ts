@@ -1,3 +1,6 @@
+/// <reference lib="es2019.Object" />
+/// <reference lib="es2015.iterable" />
+
 import { Connection, ObjectType } from "typeorm";
 import { Dictionary } from "express-serve-static-core";
 import { readFileSync } from "fs-extra";
@@ -15,9 +18,28 @@ export function getDefaultConnection() {
     return defaultConnection;
 }
 export class Query {
-    constructor(public sqlText: string) {
+    public sqlParameters: string[];
+    public subQueries: { [index: string]: Query };
+    constructor(public sqlText: string, hasSubQueries = true) {
+        //TODO
+        this.sqlParameters = Array.from(sqlText.match(/[@][a-zA-Z0-9_]+/)).map(s => s.replace('@', ''))
+        if (hasSubQueries) {
+            const sqlLines = sqlText.split("\n").map(line => line.trim()).concat('-- last' + new Date());
+            let capturingSubQueryName: string;
+            const subQuerySqlTexts: { [subQueryName: string]: string[] } = {};
+            for (const sqlLine of sqlLines) {
+                if (/--[ ][a-z][A-Za-z0-9]+/.test(sqlLine)) {
+                    capturingSubQueryName = sqlLine.replace('-- ', '');
+                    continue;
+                }
+                if (!capturingSubQueryName) continue;
+                subQuerySqlTexts[capturingSubQueryName] = subQuerySqlTexts[capturingSubQueryName] || [];
+                subQuerySqlTexts[capturingSubQueryName].push(sqlLine);
 
-
+            }
+            const { fromEntries, entries } = Object;
+            this.subQueries = fromEntries(entries(subQuerySqlTexts).map(([subQueryName, sqlText]) => [subQueryName, new Query(sqlText.join("\n\r"), false)]))
+        }
     }
     static operatorSymbols = {
         'eq': '=',
@@ -36,6 +58,7 @@ export class Query {
         const whereSegments: string[] = [];
         const sqlParamValues: any[] = [];
         for (const [paramKey, paramValue] of Object.entries(params)) {
+            if (this.sqlParameters.includes(paramKey)) continue;
             const [fieldName, operatorName = 'eq'] = paramKey.split('_');
             if (paramValue instanceof Array) {
                 whereSegments.push(`(${fieldName} IN (${paramValue.map(() => '?').join(',')}))`);
@@ -49,8 +72,8 @@ export class Query {
             }
 
         }
-        const sqlText = whereSegments.length == 0 ? this.sqlText : this.sqlText.replace('(1=1)', whereSegments.join(' AND '))
-
+        let sqlText = whereSegments.length == 0 ? this.sqlText : this.sqlText.replace('(1=1)', whereSegments.join(' AND '));
+        //sqlText=sqlText.rep
         return [sqlText, sqlParamValues];
     }
 

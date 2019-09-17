@@ -1,15 +1,14 @@
 /// <reference path="../../types/index.d.ts" />
 
-import { Router, IRouterMatcher, RequestHandler, Request, Response } from 'express';
 import captchapng from 'captchapng';
 import sha1 from 'sha1';
-
 import { EventEmitter } from 'events';
+import { routeTable,Router } from '@app-gallery';
 export function auth() {
-    return auth.router();
+    routeTable.set('/auth', auth.router());
 }
 export namespace auth {
-    const tokenSalt = `1s@adsxsff2131231231s(*&^)>dfscXse23`;
+    const tokenSalt = `1sSDFEFXXXSVF@GGDadsxsff213N1231231s(*&^)>dfscXse23`;
     interface LoginModel {
         baseURL: string;
         sessionExpireAt: number;
@@ -27,7 +26,6 @@ export namespace auth {
         freshRouter.post('/login', login);
         freshRouter.get('/time', time);
         freshRouter.get('/captcha', generateCaptcha);
-
         return freshRouter;
     }
     export function generateTokenHash(userId, sessionExpireAt) {

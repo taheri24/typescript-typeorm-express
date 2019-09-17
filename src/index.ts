@@ -11,8 +11,7 @@ import api from "./api";
 import * as entities from "./entities";
 async function main() {
   const ormConfig = await readJSON(join(process.cwd(), 'ormconfig.json'));
-
-  setDefaultConnection(await createConnection({
+   setDefaultConnection(await createConnection({
     ...ormConfig,
     entities: Object.values(entities)
   }));
@@ -25,4 +24,5 @@ async function main() {
   app.listen(3000);
   console.log("Express application is up and running on port 3000");
 }
+ 
 main().then(() => 0, console.error);

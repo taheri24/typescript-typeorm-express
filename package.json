@@ -57,7 +57,7 @@
     "typeorm": "^0.2.18"
   },
   "_moduleAliases":{
-    "@lib":"src/lib/index"
+    "@lib":"./src/lib/index"
   },
   "scripts": {
     "start": "nodemon --watch src/**/* -e js,ts,json --exec node --inspect -r module-alias/register -r ts-node/register/transpile-only src/index.ts    ",
