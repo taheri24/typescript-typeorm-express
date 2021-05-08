@@ -54,7 +54,7 @@
     "fs-extra": "^8.1.0",
     "mysql": "^2.17.1",
     "sha1": "^1.1.1",
-    "typeorm": "^0.2.18"
+    "typeorm": "^0.2.25"
   },
   "_moduleAliases":{
     "@lib":"./src/lib/index"
